@@ -1,22 +1,30 @@
 import json
 from flask import Flask, render_template, request, redirect, flash, url_for
+import os
+from flask_testing import TestCase
 
 app = Flask(__name__)
 app.secret_key = 'something_special'
 
-def loadClubs():
-    with open('clubs.json') as c:
-        listOfClubs = json.load(c)['clubs']
-        return listOfClubs
+def load_data(file_path):
+    with open(file_path) as f:
+        data = json.load(f)
+    return data
 
-def loadCompetitions():
-    with open('competitions.json') as comps:
-        listOfCompetitions = json.load(comps)['competitions']
-        return listOfCompetitions
+# Chemin du répertoire parent du fichier actuel
+base_dir = os.path.abspath(os.path.dirname(__file__))
+testing = 'true'
 
-# Load data from JSON
-clubs = loadClubs()
-competitions = loadCompetitions()
+if testing == 'false':
+    clubs_file_path = os.path.join(base_dir, 'clubs.json')
+    competitions_file_path = os.path.join(base_dir, 'competitions.json')
+else:
+    clubs_file_path = os.path.join(base_dir, 'clubs_test.json')
+    competitions_file_path = os.path.join(base_dir, 'competitions_test.json')
+
+# Chargement des données depuis les fichiers JSON
+clubs = load_data(clubs_file_path)['clubs']
+competitions = load_data(competitions_file_path)['competitions']
 
 @app.route('/')
 def index():
@@ -52,6 +60,7 @@ def purchasePlaces():
         # Check if the user has already bought 12 places for this club
         user_club_bookings = [b for b in club.get('bookings', []) if b.get('competition') == competition_name]
         user_total_places = sum(b.get('places', 0) for b in user_club_bookings)
+        print('ici', user_total_places + places_required)
         if user_total_places + places_required <= 12:
             if int(competition['numberOfPlaces']) >= places_required:
                 competition['numberOfPlaces'] = str(int(competition['numberOfPlaces']) - places_required)
@@ -65,9 +74,9 @@ def purchasePlaces():
                         'places': places_required
                     })
                     # Save in JSON
-                    with open('clubs.json', 'w') as clubs_file:
+                    with open(clubs_file_path, 'w') as clubs_file:
                         json.dump({'clubs': clubs}, clubs_file, indent=4)
-                    with open('competitions.json', 'w') as competitions_file:
+                    with open(competitions_file_path, 'w') as competitions_file:
                         json.dump({'competitions': competitions}, competitions_file, indent=4)
 
                     flash('Great-booking complete!')
@@ -93,6 +102,3 @@ def points():
 @app.route('/logout')
 def logout():
     return redirect(url_for('index'))
-
-if __name__ == '__main__':
-    app.run(debug=True)

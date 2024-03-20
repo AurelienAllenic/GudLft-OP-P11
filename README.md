@@ -2,7 +2,6 @@
 
 1. Why
 
-
     This is a proof of concept (POC) project to show a light-weight version of our competition booking platform. The aim is the keep things as light as possible, and use feedback from the users to iterate.
 
 2. Getting Started
@@ -44,8 +43,11 @@
 
 5. Testing
 
-    You are free to use whatever testing framework you like-the main thing is that you can show what tests you are using.
-
-    We also like to show how well we're testing, so there's a module called 
-    [coverage](https://coverage.readthedocs.io/en/coverage-5.1/) you should add to your project.
+    I'm using pytest and flask-testing to test the app.
+    Tests are divided into threee different folders inside our tests direcotry : unit_tests, functionnal_tests and performances tests.
+    Two json files are here to mock the data : clubs_test.json & competitions_test.json.
+    To set the app in test mode, make sure that variable is_testing  is equal to true inside server.py.
+    To test a specific file go to it's location (from root it's <code>cd ./tests</code>, then for example <code>cd ./unit_tests</code>) and execute <code>pytest name_of_your_test_file.py</code> (for example here <code>pytest test_home.py</code>).
+    To test the coverage of the tests in this app, just go to the root and execute <code>pytest --cov=./</code>.
+    To test the perforrmances of the app, you can use locust. Just go to the location of the locust file (from root : <code>cd ./tests/performances_tests</code> and then execute <code>locust -f name_of_your_locust_file.py --host=://localhost:5000</code>)
 

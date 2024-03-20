@@ -3,29 +3,16 @@
         {
             "name": "Simply Lift",
             "email": "john@simplylift.co",
-            "points": "188",
+            "points": "13",
             "bookings": [
-                {
-                    "competition": "Spring Festival",
-                    "places": 10
-                },
-                {
-                    "competition": "Spring Festival",
-                    "places": 2
-                }
             ]
-        },
-        {
-            "name": "Iron Temple",
-            "email": "admin@irontemple.com",
-            "points": "4",
-            "bookings": []
         },
         {
             "name": "She Lifts",
             "email": "kate@shelifts.co.uk",
-            "points": "12",
-            "bookings": []
+            "points": "16",
+            "bookings": [
+            ]
         }
     ]
 }
