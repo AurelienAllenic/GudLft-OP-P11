@@ -51,3 +51,6 @@
     To test the coverage of the tests in this app, just go to the root and execute <code>pytest --cov=./</code>.
     To test the perforrmances of the app, you can use locust. Just go to the location of the locust file (from root : <code>cd ./tests/performances_tests</code> and then execute <code>locust -f name_of_your_locust_file.py --host=://localhost:5000</code>)
 
+6. Branches
+
+    I have different branches for this project, master, for the entire finished project, main as a backup, QA for testing and countPoints/notImpactedByReservation/willDecrement for handling /points.
